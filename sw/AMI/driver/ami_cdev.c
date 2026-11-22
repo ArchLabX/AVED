@@ -5,6 +5,8 @@
  * Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved.
  */
 
+
+
 #include <linux/pci.h>     /* pci_dev */
 #include <linux/errno.h>   /* error codes */
 #include <linux/kernel.h>  /* container_of */
@@ -14,6 +16,12 @@
 #include <linux/types.h>
 #include <linux/hwmon.h>
 #include <linux/eventfd.h>
+
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/fs.h>
+#include <linux/uaccess.h>
+#include <linux/vmalloc.h>
 
 #include "ami.h"
 #include "ami_hwmon.h"
@@ -46,7 +54,7 @@ static int dev_major = 0;  /* This will be overridden. */
 #ifdef IS_ALMALINUX
 static char *devnode(const struct device *dev, umode_t *mode)
 #elif IS_UBUNTU
-static char *devnode(struct device *dev, umode_t *mode)
+static char *devnode(const struct device *dev, umode_t *mode)
 #endif
 {
     if (mode)
@@ -915,7 +923,8 @@ int create_cdev(unsigned baseminor, struct drv_cdev_struct *drv_cdev,
         #ifdef IS_ALMALINUX
         drv_cdev->dev_class = class_create(drv_cdev->drv_cls_str);
         #elif IS_UBUNTU
-        drv_cdev->dev_class = class_create(THIS_MODULE, drv_cdev->drv_cls_str);
+        drv_cdev->dev_class = class_create(drv_cdev->drv_cls_str);
+        // drv_cdev->dev_class = class_create(THIS_MODULE, drv_cdev->drv_cls_str);
         #endif
         if (IS_ERR(drv_cdev->dev_class)) {
             ret = PTR_ERR(drv_cdev->dev_class);

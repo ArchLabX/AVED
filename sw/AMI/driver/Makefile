@@ -44,7 +44,7 @@ $(TARGET_MODULE)-objs += gcq-driver/src/gcq_driver.o
 $(TARGET_MODULE)-objs += gcq-driver/src/gcq_hw.o
 $(TARGET_MODULE)-objs += gcq-driver/src/gcq_features.o
 
-EXTRA_CFLAGS:=-I$(PWD) -I$(PWD)/fal -I$(PWD)/fal/gcq -I$(PWD)/gcq-driver/src
+# EXTRA_CFLAGS:=-I$(PWD) -I$(PWD)/fal -I$(PWD)/fal/gcq -I$(PWD)/gcq-driver/src 
 
 KERNEL_DIR = /lib/modules/`uname -r`/build
 
@@ -53,7 +53,16 @@ KERNEL_DIR = /lib/modules/`uname -r`/build
 
 #To apply the macro to all the source files compiled with this makefile
 # ccflags-y:=-DDEBUG
-ccflags-y:=-DDEBUG -DVERBOSE_DEBUG -DGCQ_MAX_INSTANCES=16 $(DISTRO_FLAGS)
+# ccflags-y:=-DDEBUG -DVERBOSE_DEBUG -DGCQ_MAX_INSTANCES=16 $(DISTRO_FLAGS)
+ccflags-y += -I$(src)
+ccflags-y += -I$(src)/fal
+ccflags-y += -I$(src)/fal/gcq
+ccflags-y += -I$(src)/gcq-driver/src
+
+ccflags-y += -DDEBUG
+ccflags-y += -DVERBOSE_DEBUG
+ccflags-y += -DGCQ_MAX_INSTANCES=16
+ccflags-y += $(DISTRO_FLAGS)
 
 all: clean
 	$(MAKE) -C ${KERNEL_DIR} M=${PWD} modules

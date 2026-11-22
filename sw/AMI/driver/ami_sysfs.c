@@ -8,6 +8,11 @@
 #include <linux/device.h>
 #include <linux/kernel.h>
 
+#include <linux/module.h>
+#include <linux/fs.h>
+#include <linux/uaccess.h>
+#include <linux/vmalloc.h>
+
 #include "ami.h"
 #include "ami_top.h"
 #include "ami_sysfs.h"

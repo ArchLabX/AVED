@@ -8,6 +8,10 @@
 #include <linux/kthread.h>
 #include <linux/delay.h>
 #include <linux/jiffies.h>
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/slab.h>
+#include <linux/vmalloc.h>
 
 #include "ami_top.h"
 #include "ami_sensor.h"

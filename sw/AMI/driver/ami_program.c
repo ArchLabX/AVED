@@ -93,7 +93,8 @@ static int do_image_download(struct amc_control_ctxt *amc_ctrl_ctxt, uint8_t *bu
                 #ifdef IS_ALMALINUX
                 eventfd_signal(efd_ctx);
                 #elif IS_UBUNTU
-                eventfd_signal(efd_ctx, bytes_to_write);
+				eventfd_signal(efd_ctx);
+                // eventfd_signal(efd_ctx, bytes_to_write);
                 #endif
 		} else {
 			uint32_t boot_tag = INVALID_BOOT_TAG;
@@ -151,7 +152,8 @@ static int do_image_download(struct amc_control_ctxt *amc_ctrl_ctxt, uint8_t *bu
             #ifdef IS_ALMALINUX
             eventfd_signal(efd_ctx);
             #elif IS_UBUNTU
-            eventfd_signal(efd_ctx, (PDI_CHUNK_SIZE * PDI_CHUNK_MULTIPLIER));
+			eventfd_signal(efd_ctx);
+            // eventfd_signal(efd_ctx, (PDI_CHUNK_SIZE * PDI_CHUNK_MULTIPLIER));
             #endif
 	}
 
